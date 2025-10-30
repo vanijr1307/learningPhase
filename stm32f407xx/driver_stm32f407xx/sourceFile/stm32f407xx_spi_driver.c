@@ -366,11 +366,11 @@ static void spi_rxne_interrupt_handle(SPI_Handle_t *pSPIHandle){    // after the
 	if(pSPIHandle->pSPIx->CR1 & (1<<SPI_CR1_DFF)){
 
 
-			pSPIHandle->pSPIx->DR =*((uint16_t *)pSPIHandle->pRxBuffer);
+			*((uint16_t *)pSPIHandle->pRxBuffer)  =pSPIHandle->pSPIx->DR ;
 			pSPIHandle->RxLen -=2;
 				(uint16_t *)pSPIHandle->pRxBuffer++;
 			}else{
-				pSPIHandle->pSPIx->DR =*(pSPIHandle->pRxBuffer);
+				*(pSPIHandle->pRxBuffer)=pSPIHandle->pSPIx->DR;
 				pSPIHandle->RxLen--;
 				pSPIHandle->pRxBuffer++;
 
@@ -430,5 +430,6 @@ void SPI_CloseReception(SPI_Handle_t *SPIHandle){
 __attribute__((weak)) void SPI_ApplicationEventCallback(SPI_Handle_t *SPIHandle,uint8_t AppEvt){
 
 }
+
 
 
